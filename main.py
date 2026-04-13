@@ -125,6 +125,11 @@ else:
     # ════════════════════════════════════════════════════════
     # TAB 1 — ML PREDICTION
     # ════════════════════════════════════════════════════════
+    model_type = st.selectbox(
+    "🔧 Model Selection",
+    ["Random Forest", "Gradient Boosting"],
+    help="Compare predictions between models"
+    )
     with tab_ml:
         if using_fallback:
             st.error("**gene2care_models.joblib not found** — "
