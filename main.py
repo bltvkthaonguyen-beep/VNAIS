@@ -3,16 +3,16 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-from app.core.ml.predictor import ml_predict
-from app.core.ml.loader import load_models
-from app.core.rules.rule_engine import rule_based_predict
-from app.core.explain.explanation import build_explanation
-from app.config.constants import (
+from app.core.ML import ml_predict
+from app.core.ML import load_models
+from app.core.rules import rule_based_predict
+from app.core.EXPLANATION import build_explanation
+from app.config import (
     NUMERIC_FEATURES,
     CATEGORICAL_FEATURES
 )
-from app.config.scenarios import DEMO_SCENARIOS
-from app.ui.render import render_app
+from app.configs import DEMO_SCENARIOS
+from app.UI import render_app
 render_app()
 # ──────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
