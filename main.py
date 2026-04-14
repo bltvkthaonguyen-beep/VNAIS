@@ -12,8 +12,7 @@ from config import (
     CATEGORICAL_FEATURES
 )
 from configs import DEMO_SCENARIOS
-from UI import render_app
-render_app()
+from UI import *
 # ──────────────────────────────────────────────────────────────────────────────
 # PAGE CONFIG
 # ──────────────────────────────────────────────────────────────────────────────
