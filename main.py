@@ -1,13 +1,13 @@
 """
 Gene2Care-AI — Clinical Decision Support Demo  (v3)
 ====================================================
-Run:  streamlit run app.py
+Run:  streamlit run main.py
 Requires: streamlit, pandas, numpy, joblib, scikit-learn, matplotlib
 Optional: shap  (pip install shap)
 
-Required files in the same directory:
-  gene2care_models.joblib   — trained RF / GBM pipelines
-  gene2care_extras.joblib   — preprocessor, calibrated model, SHAP artifacts
+Required file (one of):
+  gene2care_combined.joblib  -- all models + extras in one file  (preferred)
+  OR both: gene2care_models.joblib + gene2care_extras.joblib
 
 New in v3
 ----------
@@ -107,11 +107,25 @@ html,body,[class*="css"]{font-family:'DM Sans',sans-serif;}
 # ──────────────────────────────────────────────────────────────────────────────
 @st.cache_resource(show_spinner="Loading models…")
 def load_all():
+    """
+    Load strategy (tries in order):
+    1. gene2care_combined.joblib  -- single merged file (preferred for deployment)
+    2. gene2care_models.joblib + gene2care_extras.joblib  -- separate files (legacy)
+    All keys from both files are merged into a single dict returned as (data, data).
+    """
+    # Try combined file first
+    try:
+        data = joblib.load("gene2care_combined.joblib")
+        return data, data
+    except FileNotFoundError:
+        pass
+    # Fallback: load separate files
     try:
         models = joblib.load("gene2care_models.joblib")
         extras = joblib.load("gene2care_extras.joblib")
-        return models, extras
-    except FileNotFoundError as e:
+        combined = {**models, **extras}
+        return combined, combined
+    except FileNotFoundError:
         return None, None
 
 models, extras = load_all()
